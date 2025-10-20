@@ -15,9 +15,9 @@ public abstract class Product {
         if(name == null || name.isBlank()){
             throw new IllegalArgumentException("name can't be null or blank");
         }
-        this.name = name;
+        this.name = Objects.requireNonNull(name, "name");
         this.category = Objects.requireNonNull(category, "category can't be null");
-        this.price = price;
+        this.price = Objects.requireNonNull(price, "price");
     }
 
     public BigDecimal price() {
@@ -28,11 +28,11 @@ public abstract class Product {
         return id;
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
-    public Category getCategory() {
+    public Category category() {
         return category;
     }
 

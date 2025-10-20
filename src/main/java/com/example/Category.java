@@ -30,7 +30,7 @@ public class Category {
         return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
     }
 
-    public String getName(){
+    public String name(){
         return name;
     }
 

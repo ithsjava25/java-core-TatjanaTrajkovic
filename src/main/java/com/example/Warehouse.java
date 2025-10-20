@@ -3,6 +3,7 @@ package com.example;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class Warehouse {
     private final Map<String, Warehouse> INSTANCES = new ConcurrentHashMap<>();
@@ -62,10 +63,12 @@ public class Warehouse {
         return List.copyOf(list);
     }
 
-    public List<Product> expiredProducts(){
+    public List<Perishable> expiredProducts(){
         return products.values().stream()
-                .filter(product -> (product instanceof Perishable per) && per.isExpired())
-                .toList();
+                .filter(p -> (p instanceof Perishable per) && per.isExpired())
+                .map(p -> (Perishable) p)
+                .filter(Perishable::isExpired)
+                .collect(Collectors.toList());
     }
 
     public List<Shippable> shippableProducts(){
@@ -78,6 +81,21 @@ public class Warehouse {
     public String getName(){
         return name;
     }
+
+    public void clearProducts(){
+        products.clear();
+        changedProductIds.clear();
+    }
+
+    public boolean isEmpty(){
+        return products.isEmpty();
+    }
+
+    public void remove(UUID id){
+        products.remove(id);
+        changedProductIds.remove(id);
+    }
+
 
 
 }

@@ -258,7 +258,7 @@ class WarehouseAnalyzer {
         BigDecimal highValueThreshold = new BigDecimal("1000");
         long highValueCount = items.stream().filter(p -> p.price().compareTo(highValueThreshold) >= 0).count();
         double percentage = (highValueCount * 100.0) / items.size();
-        int diversity = (int) items.stream().map(Product::cate*-gory).distinct().count();
+        int diversity = (int) items.stream().map(Product::category).distinct().count();
         return new InventoryValidation(percentage, diversity);
     }
     

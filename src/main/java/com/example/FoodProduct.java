@@ -58,6 +58,6 @@ public class FoodProduct extends Product implements Perishable, Shippable{
 
     @Override
     public String productDetails(){
-        return "Food: " + getName() + ", Expires: " + expirationDate;
+        return "Food: " + name() + ", Expires: " + expirationDate;
     }
 }

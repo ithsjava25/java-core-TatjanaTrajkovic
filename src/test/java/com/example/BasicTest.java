@@ -40,7 +40,7 @@ class BasicTest {
         @DisplayName("✅ should be created using the 'of' factory method")
         void should_beCreated_when_usingFactoryMethod() {
             Category category = Category.of("Electronics");
-            assertThat(category.getName())
+            assertThat(category.name())
                     .as("The category name should match the value provided to the factory method.")
                     .isEqualTo("Electronics");
         }
@@ -61,7 +61,7 @@ class BasicTest {
         @DisplayName("✅ should capitalize the first letter of its name automatically")
         void should_capitalizeName_when_createdWithLowercase() {
             Category category = Category.of("fruit");
-            assertThat(category.getName())
+            assertThat(category.name())
                     .as("The category's name should be formatted with an initial capital letter.")
                     .isEqualTo("Fruit");
         }
