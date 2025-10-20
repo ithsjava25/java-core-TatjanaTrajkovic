@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class FoodProduct extends Product implements Perishable, Shippable{
     private final LocalDate expirationDate;
-    private final BigDecimal weight;
+    private final BigDecimal weight; //kg
 
     public FoodProduct(UUID id,
                        String name,
@@ -17,7 +17,7 @@ public class FoodProduct extends Product implements Perishable, Shippable{
                        BigDecimal weight){
 
         if(price != null && price.signum() < 0){
-            throw new IllegalArgumentException("Price cannot be negativ.");
+            throw new IllegalArgumentException("Price cannot be negative.");
         }
         super(id, name, category, price);
 
@@ -43,11 +43,20 @@ public class FoodProduct extends Product implements Perishable, Shippable{
         }
         return weight.multiply(BigDecimal.valueOf(50));
     }
+    @Override
+    public Double weight(){
+        return weight == null ? null : weight.doubleValue();
+    }
 
+//    @Override
+//    public void price(BigDecimal newPrice){
+//        if(newPrice != null && newPrice.signum() < 0){
+//            throw new IllegalArgumentException("Price cannot be negative.");
+//        }
+//        super.getPrice(newPrice);
+//    }
 
-
-
-
+    @Override
     public String productDetails(){
         return "Food: " + getName() + ", Expires: " + expirationDate;
     }

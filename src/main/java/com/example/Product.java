@@ -20,6 +20,10 @@ public abstract class Product {
         this.price = price;
     }
 
+    public BigDecimal price() {
+        return price;
+    }
+
     public UUID getUuid() {
         return id;
     }
@@ -32,13 +36,10 @@ public abstract class Product {
         return category;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public void price(BigDecimal newPrice) {
+        this.price = Objects.requireNonNull(newPrice, "price");
     }
 
-    public void setPrice(BigDecimal price){
-        this.price = price;
-    }
 
     public abstract String productDetails();
 
