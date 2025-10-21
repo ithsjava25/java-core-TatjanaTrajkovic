@@ -17,16 +17,20 @@ public class Category {
         if(name == null){
             throw new IllegalArgumentException("Category name can't be null");
         }
-        String normalized = normalize(name);
-        if(normalized.isBlank()){
+        String trimmed = name.trim();
+        if(trimmed.isEmpty()){
             throw new IllegalArgumentException("Category name can't be blank");
         }
+        String normalized = normalize(trimmed);
         return CACHE.computeIfAbsent(normalized, Category::new);
     }
 
     public static String normalize(String input){
-        String trimmed = input.trim();
-        String lower = trimmed.toLowerCase(Locale.ROOT);
+        String s = input.trim();
+        if(s.isEmpty()){
+            return "";
+        }
+        String lower = s.toLowerCase(Locale.ROOT);
         return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
     }
 

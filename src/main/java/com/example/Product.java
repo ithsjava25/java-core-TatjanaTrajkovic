@@ -24,7 +24,7 @@ public abstract class Product {
         return price;
     }
 
-    public UUID getUuid() {
+    public UUID uuid() {
         return id;
     }
 

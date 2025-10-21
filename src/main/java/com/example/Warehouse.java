@@ -6,9 +6,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class Warehouse {
-    private final Map<String, Warehouse> INSTANCES = new ConcurrentHashMap<>();
+    private static final Map<String, Warehouse> INSTANCES = new ConcurrentHashMap<>();
 
-    public Warehouse getInstance(String name){
+    public static Warehouse getInstance(String name){
         Objects.requireNonNull(name, "name cannot be null");
         String key = name.trim();
         if(key.isEmpty()){
@@ -30,7 +30,7 @@ public class Warehouse {
         if(p == null){
             throw new IllegalArgumentException("Product cannot be null.");
         }
-        products.put(p.getUuid(), p);
+        products.put(p.uuid(), p);
     }
 
     public List<Product> getProducts(){
@@ -75,7 +75,7 @@ public class Warehouse {
         return products.values().stream()
                 .filter(product -> (product instanceof Shippable))
                 .map(product -> (Shippable) product)
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     public String getName(){
@@ -95,6 +95,33 @@ public class Warehouse {
         products.remove(id);
         changedProductIds.remove(id);
     }
+
+    public Map<Category, List<Product>> getProductsGroupedByCategories() {
+        return products.values()
+                .stream()
+                .collect(Collectors.groupingBy(Product::category));
+    }
+
+//    public Map<Category, List<Product>> getProductsGroupedByCategories(){
+//        if(products.isEmpty()){
+//            return Collections.emptyMap();
+//        }
+//
+//        Map<Category, List<Product>> grouped = products.values().stream()
+//                .collect(Collectors.groupingBy(
+//                        Product::category,
+//                        LinkedHashMap::new,
+//                        Collectors.toList()
+//                ));
+//
+//        Map <Category, List<Product>> immutable = new LinkedHashMap<>();
+//        grouped.forEach((category, list) ->
+//                immutable.put(category, Collections.unmodifiableList(new ArrayList<>(list))));
+//        return Collections.unmodifiableMap(immutable);
+//    }
+
+
+
 
 
 
